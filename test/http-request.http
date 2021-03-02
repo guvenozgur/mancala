@@ -1,0 +1,10 @@
+###
+http://localhost:4000/play/create/testGame
+
+###
+http://localhost:4000/play/create/testGame
+###
+http://localhost:4000/play/getAllGames
+
+###
+http://localhost:4000/play/deleteGame/testGame
