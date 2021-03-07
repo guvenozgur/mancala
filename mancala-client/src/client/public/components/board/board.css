@@ -1,0 +1,12 @@
+#game-board{
+    display: flex;
+    flex-flow: row;
+}
+
+#game-button{
+    margin:5px;
+}
+
+#game-text-element{
+    margin: 10px;
+}

@@ -1,0 +1,10 @@
+#root{
+    height: 100%;
+    margin: 0px;
+
+}
+
+#app-content{
+    background-color: aliceblue;
+    height: 95%;
+}
