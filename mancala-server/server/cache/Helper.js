@@ -3,7 +3,7 @@ const redis = Promise.promisifyAll(require('redis'));
 const redisClient = redis.createClient({host: 'localhost', port: 6379});
 const config = require('../../config/Config');
 
-module.exports = () => {
+const self = {
 
     /*
     *   Mancala Board
@@ -19,25 +19,27 @@ module.exports = () => {
     *   }
     * */
 
-    const self = {
 
-        async upsertBoard(board, gameId){
-            await redisClient.hmsetAsync(config.MANCALA_GAME_PREFIX, gameId, JSON.stringify(board));
-        },
 
-        async getBoard(gameId){
-            let game = await redisClient.hmgetAsync(config.MANCALA_GAME_PREFIX, gameId);
-            return JSON.parse(game);
-        },
+    async upsertBoard(board, gameId) {
+        await redisClient.hmsetAsync(config.MANCALA_GAME_PREFIX, gameId, JSON.stringify(board));
+    },
 
-        async clearGame(){
-            await redisClient.del(config.MANCALA_GAME_PREFIX)
-        },
+    async getBoard(gameId) {
+        let game = await redisClient.hmgetAsync(config.MANCALA_GAME_PREFIX, gameId);
+        return JSON.parse(game);
+    },
 
-        async getAllGames(gameId){
-            let game = await redisClient.hgetallAsync(config.MANCALA_GAME_PREFIX)
-            return game;
-        }
+    async clearGame() {
+        await redisClient.del(config.MANCALA_GAME_PREFIX)
+    },
+
+    async getAllGames(gameId) {
+        let game = await redisClient.hgetallAsync(config.MANCALA_GAME_PREFIX)
+        return game;
     }
-    return self;
+
+
 }
+
+module.exports = self;

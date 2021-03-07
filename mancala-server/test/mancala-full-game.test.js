@@ -1,16 +1,5 @@
 'use strict';
-const redisHelper = require('../server/cache/Helper')();
-const {move, createGame, removeGame, getGame} = require('../server/service/GamePlay')
-
-beforeAll(async () => {
-});
-
-afterEach(async () => {
-});
-
-
-afterAll(async () => {
-});
+const {move, createGame} = require('../server/service/GamePlay')
 
 
 describe('game ', () => {

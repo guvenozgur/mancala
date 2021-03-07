@@ -1,4 +1,4 @@
-const redisHelper = require('../cache/Helper')();
+const redisHelper = require('../cache/Helper');
 const config = require('../../config/Config');
 let Mancala = require('../model/Mancala');
 let mancala;

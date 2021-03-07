@@ -3,7 +3,7 @@ const gameStates = require('../../config/GameStates');
 const Game = require('../schema/game');
 const PlayerService = require('../service/PlayerService')();
 const {move, createGame} = require('../service/GamePlay')
-const redisHelper = require('../cache/Helper')();
+const redisHelper = require('../cache/Helper');
 
 module.exports = ()=>{
 

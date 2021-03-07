@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand ./test",
-    "test-mocha": "mocha ./tests/*.test.js",
+    "test-mocha": "mocha ./test/mancala-test.js",
+    "test-jest": "jest --runInBand ./test/mancala-full-game.test.js",
     "start": "node ./server/app.js"
   },
   "keywords": [],
