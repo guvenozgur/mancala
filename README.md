@@ -1,0 +1,1 @@
+Tech stack: nodejs, socketio, express, react, redux, redis, mongodb, typescript, mocha, sinon, jest 
