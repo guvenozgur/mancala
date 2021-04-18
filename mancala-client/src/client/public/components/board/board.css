@@ -10,3 +10,11 @@
 #game-text-element{
     margin: 10px;
 }
+
+#game-board-side{
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+}
+
+

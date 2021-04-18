@@ -15,7 +15,7 @@ module.exports.move = async (gameId, player, selectedPitId)=>{
         applyRules(isOpponentPit, pitId, mancala, player);
         let winner = mancala.isGameEnded(player);
         await redisHelper.upsertBoard(mancala, gameId);
-        let result = {winner, mancala: JSON.stringify(mancala)};
+        let result = {winner, game: mancala};
         return result;
     }
     throw new Error('Move is not allowed!');

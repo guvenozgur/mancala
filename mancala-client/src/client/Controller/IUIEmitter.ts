@@ -1,6 +1,5 @@
 export default interface IUIEmitter {
-
-    createGameResponse(msg: any): void;
-    moveResp(msg: any): void;
-    setTurn(msg: any): void;
+    loginSuccess(playerId: string): void;
+    updateBoard(board: any): void;
+    waitingForParticipant(isWaiting: any): void;
 }

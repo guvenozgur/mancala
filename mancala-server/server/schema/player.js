@@ -8,7 +8,7 @@ const playerSchema = new mongoose.Schema({
     },
     socketId:{
         type: String,
-        required: true,
+        required: false,
     },
     gameId:{
         type: String,

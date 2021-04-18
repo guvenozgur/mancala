@@ -9,7 +9,9 @@ const config = {
     REDIS_HOST: 'localhost',
     REDIS_PORT: 6379,
     REDIS_REQ_TIMEOUT: 5000,
-    DATABASE_URL: 'mongodb://localhost:27017/games'
+    DATABASE_URL: 'mongodb://localhost:27017/games',
+    ACCESS_TOKEN_SECRET: '09f26e402586e2faa8da4c98a35f1b20d6b033c6097befa8be3486a829587fe2f90a832bd3ff9d42710a4da095a2ce285b009f0c3730cd9b8e1af3eb84df6611',
+    JWT_EXPIRE_TIME: '1800s'
 }
 
 module.exports = config;

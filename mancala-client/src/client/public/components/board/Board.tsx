@@ -1,38 +1,12 @@
 import React from 'react';
 import {connect} from "react-redux";
-import TextField from '@material-ui/core/TextField';
 import bind from 'bind-decorator';
 import './board.css';
+import Pit from "../pit/Pit";
 
-const pits = [
-    {
-        value: '0',
-        label: 'Pit 0',
-    },
-    {
-        value: '1',
-        label: 'Pit 1',
-    },
-    {
-        value: '2',
-        label: 'Pit 2',
-    },
-    {
-        value: '3',
-        label: 'Pit 3',
-    },
-    {
-        value: '4',
-        label: 'Pit 4',
-    },
-    {
-        value: '5',
-        label: 'Pit 5',
-    }
-];
 
 interface IBoardProps {
-    boardData: any;
+    game: any;
     move: any;
     playerId: any;
     turn: any;
@@ -40,11 +14,12 @@ interface IBoardProps {
 
 interface IBoardState {
     pit: number;
-    prevBoardData: any;
     opponentPits: any;
     opponentTreasure: any;
     selfPits: any;
     selfTreasure: any;
+    board:any;
+    turn: any;
 }
 
 class Board extends React.Component<IBoardProps, IBoardState> {
@@ -53,11 +28,12 @@ class Board extends React.Component<IBoardProps, IBoardState> {
         super(props);
         this.state = {
             pit: 1,
-            prevBoardData: '',
             opponentPits: undefined,
             opponentTreasure: undefined,
             selfPits: undefined,
-            selfTreasure: undefined
+            selfTreasure: undefined,
+            board: undefined,
+            turn: undefined
         };
     }
 
@@ -76,52 +52,70 @@ class Board extends React.Component<IBoardProps, IBoardState> {
         this.props.move(id);
     }
 
+    @bind
+    notAllowedMove(id: number){
+        console.log(`not allowed move: ${id}`);
+    }
+
+    preparePits(){
+        if(this.props.game?.board){
+            this.setState({turn: this.props.game.turn});
+            let board = this.props.game.board;
+            let ownPits = board[this.props.playerId].pits.map((count: any, index: any)=>{
+                return (
+                    <Pit count={count} id={index} move={this.movePit}></Pit>
+                )
+            });
+            let ownTreasure = board[this.props.playerId].treasure;
+            let opponentId = this.getOpponentId();
+            let opponentPits = board[opponentId].pits.map((count: any, index: any)=>{
+                return (
+                    <Pit count={count} id={index} move={this.notAllowedMove}></Pit>
+                )
+            });
+            let opponentTreasure = board[opponentId].treasure;
+            return {ownPits,ownTreasure, opponentPits, opponentTreasure};
+        }
+
+       return
+    }
+
+    getOpponentId(): any{
+        return Object.keys(this.props.game.board).find(id => id!=this.props.playerId)
+    }
+
 
     componentDidUpdate(prevProps: Readonly<IBoardProps>) {
-        if (prevProps.boardData !== this.props.boardData && this.props.boardData) {
-            this.setState({prevBoardData: prevProps.boardData});
+        if (prevProps.game !== this.props.game && this.props.game) {
+            this.setState({board: this.preparePits()});
         }
+    }
+
+    componentDidMount() {
+        this.setState({board: this.preparePits()});
     }
 
     render() {
         return (
             <div>
-                <h4>{this.props.playerId}</h4>
+                <h4>Player: {this.props.playerId}</h4>
                 <br/>
-                <TextField
-                    id="standard-select-currency-native"
-                    select
-                    label="Native select"
-                    value={this.state.pit}
-                    onChange={this.handleChange}
-                    SelectProps={{
-                        native: true,
-                    }}
-                    helperText="Please select your currency">
-                    {pits.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </TextField>
-                <button id='game-button' onClick={this.move}>Move</button>
-
-
                 <div id='game-text-element'>
-                    Selected Pit: {this.state.pit}
-                </div>
-                <div id='game-text-element'>
-                Turn: {this.props.turn}
+                Turn: {this.state.turn}
                 </div>
                 <div id='game-board'>
-                    <div id='game-text-element'>
-                    Current board:
+                    {this.state.board &&
+                    <div>
+                        <div id='game-board-side'>
+                            {this.state.board.ownPits}
+                            {this.state.board.ownTreasure}
+                        </div>
+                        <div id='game-board-side'>
+                            {this.state.board.opponentPits}
+                            {this.state.board.opponentTreasure}
+                        </div>
                     </div>
-                    <pre>{this.props.boardData}</pre>
-                    <div id='game-text-element'>
-                    Previous board:
-                    </div>
-                    <pre>{this.state.prevBoardData}</pre>
+                    }
                 </div>
 
             </div>
@@ -131,7 +125,7 @@ class Board extends React.Component<IBoardProps, IBoardState> {
 
 const mapStateToProps = (store: any) => {
     return {
-        boardData: store.get('board'),
+        game: store.get('game'),
         playerId: store.get('playerId'),
         turn: store.get('turn')
     }

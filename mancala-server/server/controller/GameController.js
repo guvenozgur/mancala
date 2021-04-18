@@ -3,6 +3,7 @@
 const router = require('express').Router();
 const {routeMappings} = require('../../config/Mappings');
 const gameService = require('../service/GameService')
+const {auth} = require('../service/Authentication')
 
 module.exports = ()=>{
     router.get(routeMappings.CREATE, async (req, res) => {

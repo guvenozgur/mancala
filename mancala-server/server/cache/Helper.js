@@ -19,8 +19,6 @@ const self = {
     *   }
     * */
 
-
-
     async upsertBoard(board, gameId) {
         await redisClient.hmsetAsync(config.MANCALA_GAME_PREFIX, gameId, JSON.stringify(board));
     },

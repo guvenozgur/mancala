@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 const gameStates = require('../../config/GameStates');
 const Game = require('../schema/game');
-const PlayerService = require('../service/PlayerService')();
+const PlayerService = require('../service/PlayerService');
 const {move, createGame} = require('../service/GamePlay')
 const redisHelper = require('../cache/Helper');
 
@@ -29,8 +29,8 @@ module.exports = ()=>{
                 game[0].state = gameStates.PLAYING;
                 game[0].playerTwoId = playerTwoId;
                 game[0].save();
-                createGame(gameId, game[0].playerOneId, playerTwoId);
-                return {id: game[0].playerTwoId, game: game[0]};
+                let board = await createGame(gameId, game[0].playerOneId, playerTwoId);
+                return {id: game[0].playerTwoId, game: JSON.parse(board)};
             }catch (err){
                 throw new Error('Error: join game');
             }

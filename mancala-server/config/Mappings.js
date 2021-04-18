@@ -7,7 +7,9 @@ module.exports.routeMappings = {
     GET_ALL_GAMES: '/getAllGames',
     DELETE_GAMES: '/deleteGame',
     GET_CACHED_GAMES:'/getCachedGames',
-    DELETE_ALL_PLAYERS: '/deleteAllPlayers'
+    DELETE_ALL_PLAYERS: '/deleteAllPlayers',
+    AUTHENTICATE: '/authenticate',
+    LOGIN: '/login'
 }
 
 module.exports.serverSocketEvents = {
@@ -15,7 +17,8 @@ module.exports.serverSocketEvents = {
     MOVE: 'move',
     CREATE: 'create',
     GET_ALL_GAMES: 'getAllGames',
-    DELETE_GAME: 'deleteGame'
+    DELETE_GAME: 'deleteGame',
+    DISCONNECT: 'disconnect'
 }
 
 module.exports.clientSocketEvents = {

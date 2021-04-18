@@ -1,46 +1,65 @@
 import IUIEmitter from "./IUIEmitter";
 import IMancalaController from "./IMancalaController";
 import * as io from 'socket.io-client';
-import bind from 'bind-decorator';
-import {serverSocketEvents, clientSocketEvents, socketConfs} from '../../config/Mappings';
+import {serverSocketEvents, clientSocketEvents, socketConfs, paths} from '../../config/Mappings';
+import bind from "bind-decorator";
+import {httpGet} from "../util/RestUtil";
 
 export default class MancalaController implements IMancalaController{
 
     private uiEmitter: IUIEmitter;
-    private gameName: String;
-    private readonly socket: any;
+    private gameName: string;
+    private socket: any;
+    private playerId: string
 
-    constructor() {
+    @bind
+    async login(playerId: string){
+        try{
+            await httpGet(`${socketConfs.socketUrl}${paths.LOGIN}`, {username: playerId});
+            this.playerId = playerId;
+            this.initSocket();
+        }catch (e){
+            console.log(`Login error`)
+        }
+    }
+
+    @bind
+    initSocket(){
         this.socket = io.connect(socketConfs.socketUrl);
-        this.socket.onMessage = this.onMessage;
-        this.socket.on(clientSocketEvents.CREATE_RESP, this.gameCreation);
-        this.socket.on(clientSocketEvents.GET_ALL_GAMES_RESP, this.allGames);
-        this.socket.on(clientSocketEvents.MOVE_RESP, this.postMove);
-        this.socket.on(clientSocketEvents.DELETE_GAME_RESP, this.gameDeleted);
-        this.socket.on(clientSocketEvents.JOIN_RESP, this.joinSuccess);
+        this.socket.on('connect', ()=>{
+            this.socket.on(clientSocketEvents.MOVE_RESP, this.postMove);
+            this.socket.on(clientSocketEvents.JOIN_RESP, this.joinSuccess);
+            this.uiEmitter.loginSuccess(this.playerId);
+        });
     }
 
     @bind
     createGame(gameName: string): void {
         this.gameName = gameName;
-        this.socket.emit(serverSocketEvents.CREATE, {gameName});
+        this.socket.emit(serverSocketEvents.CREATE, {gameName}, ()=>{
+            this.gameCreated();
+        });
     }
 
     @bind
     joinGame(gameName: string): void {
         this.gameName = gameName;
-        this.socket.emit(serverSocketEvents.JOIN, {gameName})
+        this.socket.emit(serverSocketEvents.JOIN, {gameName}, (response: any)=>{
+            this.joinSuccess(response);
+        })
     }
 
     @bind
     move(pitId: number): void {
-        this.socket.emit(serverSocketEvents.MOVE, {pitId})
+        this.socket.emit(serverSocketEvents.MOVE, {pitId}, (response: any)=>{
+            this.moveResp(response);
+        })
         console.log(`pit: ${pitId} && game: ${this.gameName}`);
     }
 
     @bind
     moveResp(msg: any){
-        this.uiEmitter.moveResp(msg);
+        this.uiEmitter.updateBoard(msg.game);
     }
 
     @bind
@@ -59,22 +78,16 @@ export default class MancalaController implements IMancalaController{
     }
 
     @bind
-    gameCreation(msg: any){
-        console.log(`Game created: ${JSON.stringify(msg)}`);
-        this.uiEmitter.createGameResponse(msg.playerOneId);
-    }
-
-    @bind
-    allGames(msg: any){
-        console.log(`All games: ${JSON.stringify(msg)}`);
+    gameCreated(){
+        console.log(`Game created...`);
+        this.uiEmitter.waitingForParticipant(true);
     }
 
 
     @bind
     postMove(msg: any){
         console.log(`Move: ${JSON.stringify(msg)}`);
-        this.uiEmitter.moveResp(JSON.parse(msg.mancala));
-        this.uiEmitter.setTurn(JSON.parse(msg.mancala).turn);
+        this.uiEmitter.updateBoard(msg.game);
     }
 
 
@@ -86,9 +99,7 @@ export default class MancalaController implements IMancalaController{
     @bind
     joinSuccess(msg: any){
         console.log(`Join Success: ${JSON.stringify(msg)}`);
-        this.uiEmitter.createGameResponse(msg.game.playerTwoId);
-
+        this.uiEmitter.updateBoard(msg.game);
+        this.uiEmitter.waitingForParticipant(false);
     }
-
-
 }

@@ -1,25 +1,20 @@
 import {Map} from 'immutable';
 
 
-export const mancalaRecuder = (store: any  = Map(), action: any)=>{
-    switch(action.type){
-        case 'MOVE':
-            console.log('Move');
-            return store.set('board', JSON.stringify(action.data.board, null, 2));
-        case 'GAME_CREATED':
-            console.log('Game Created');
-            return store.set('gameCreated', action.data);
-        case 'SET_TURN':
-            console.log('Turn');
-            return store.set('turn', action.data);
+export const mancalaRecuder = (store: any = Map(), action: any) => {
+    switch (action.type) {
+        case 'UPDATE_BOARD':
+            console.log('UPDATE_BOARD');
+            return store.set('game', action.data);
         case 'SET_PLAYER_ID':
-            console.log('SET_PLAYER_ID');
-            let player = store.get('playerId');
-            if(player){
-                return store.set('playerId', player);
-            }
+            console.log('Set player id');
             return store.set('playerId', action.data);
+        case 'SET_GAME_NAME':
+            console.log('Set game name id');
+            return store.set('gameName', action.data);
+        case 'WAITING_FOR_PARTICIPANT':
+            return store.set('isWaiting', action.data);
         default:
-            return store 
+            return store
     }
 }

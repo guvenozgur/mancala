@@ -32,7 +32,7 @@ describe("Cache Mocking", () => {
 
             assert.deepEqual(result, {
                 winner: undefined,
-                mancala: '{"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p1","board":{"p1":{"pits":[0,7,7,7,7,7],"treasure":1},"p2":{"pits":[6,6,6,6,6,6],"treasure":0}}}'
+                game: {"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p1","board":{"p1":{"pits":[0,7,7,7,7,7],"treasure":1},"p2":{"pits":[6,6,6,6,6,6],"treasure":0}}}
             });
         })
 
@@ -55,7 +55,7 @@ describe("Cache Mocking", () => {
             const result = await move('testGame', 'p1', 5);
 
             assert.deepEqual(result, {
-                mancala: '{"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p1","board":{"p1":{"pits":[0,0,0,0,0,0],"treasure":41},"p2":{"pits":[2,0,6,1,0,0],"treasure":22}}}',
+                game: {"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p1","board":{"p1":{"pits":[0,0,0,0,0,0],"treasure":41},"p2":{"pits":[2,0,6,1,0,0],"treasure":22}}},
                 winner: {
                     isEnded: true,
                     winner: 'p1'
@@ -82,7 +82,7 @@ describe("Cache Mocking", () => {
             const result = await move('testGame', 'p1', 5);
 
             assert.deepEqual(result, {
-                mancala: '{"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p1","board":{"p1":{"pits":[0,0,0,0,0,0],"treasure":23},"p2":{"pits":[2,0,6,1,0,0],"treasure":40}}}',
+                game: {"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p1","board":{"p1":{"pits":[0,0,0,0,0,0],"treasure":23},"p2":{"pits":[2,0,6,1,0,0],"treasure":40}}},
                 winner: {
                     isEnded: true,
                     winner: 'p2'
@@ -109,7 +109,7 @@ describe("Cache Mocking", () => {
             const result = await move('testGame', 'p1', 0);
 
             assert.deepEqual(result, {
-                mancala: '{"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p1","board":{"p1":{"pits":[0,7,7,7,7,7],"treasure":1},"p2":{"pits":[6,6,6,6,6,6],"treasure":0}}}',
+                game: {"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p1","board":{"p1":{"pits":[0,7,7,7,7,7],"treasure":1},"p2":{"pits":[6,6,6,6,6,6],"treasure":0}}},
                 winner: undefined,
             });
         })
@@ -133,7 +133,7 @@ describe("Cache Mocking", () => {
             const result = await move('testGame', 'p1', 5);
 
             assert.deepEqual(result, {
-                mancala: '{"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p2","board":{"p1":{"pits":[1,3,6,0,6,0],"treasure":21},"p2":{"pits":[0,3,7,7,7,7],"treasure":9}}}',
+                game: {"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p2","board":{"p1":{"pits":[1,3,6,0,6,0],"treasure":21},"p2":{"pits":[0,3,7,7,7,7],"treasure":9}}},
                 winner: undefined,
             });
         })
@@ -157,7 +157,7 @@ describe("Cache Mocking", () => {
             const result = await move('testGame', 'p1', 1);
 
             assert.deepEqual(result, {
-                mancala: '{"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p2","board":{"p1":{"pits":[1,0,7,0,6,2],"treasure":23},"p2":{"pits":[5,3,0,7,7,7],"treasure":9}}}',
+                game: {"numberOfPit":12,"numberOfSeedPerPit":6,"playerOneId":"p1","playerTwoId":"p2","turn":"p2","board":{"p1":{"pits":[1,0,7,0,6,2],"treasure":23},"p2":{"pits":[5,3,0,7,7,7],"treasure":9}}},
                 winner: undefined
             });
         })

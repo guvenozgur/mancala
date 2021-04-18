@@ -18,12 +18,13 @@ module.exports.serverSocketEvents = {
 
 module.exports.clientSocketEvents = {
     JOIN_RESP: 'joinResp',
-    MOVE_RESP: 'moveResp',
-    CREATE_RESP: 'createResp',
-    GET_ALL_GAMES_RESP: 'getAllGamesResp',
-    DELETE_GAME_RESP: 'deleteGameResp'
+    MOVE_RESP: 'moveResp'
 }
 
 module.exports.socketConfs = {
-    socketUrl: 'http://localhost:4000'
+    socketUrl: 'http://localhost:4000/'
+}
+
+module.exports.paths = {
+    LOGIN: 'auth/login'
 }

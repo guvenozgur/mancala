@@ -11,7 +11,7 @@ describe('game ', () => {
             .toThrow();
     });
 
-    it('move (player:1, pid:2)', async () => {
+    it('move (player:1, pit:2)', async () => {
         await expect(async () => {
             await move('test-game-1', 1, 2);
         })

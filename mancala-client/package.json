@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start-dev": "webpack-dev-server  -d --https --mode development --open --hot  --history-api-fallback",
+    "start-dev": "webpack-dev-server  -d --http --mode development --open --hot  --history-api-fallback",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/server/server.js",
     "build": "webpack --mode production",
@@ -51,8 +51,10 @@
     "@types/react-router": "^5.1.8",
     "@types/redux-thunk": "^2.1.0",
     "@types/socket.io-client": "^1.4.35",
+    "axios": "^0.21.1",
     "bind-decorator": "^1.0.11",
     "bootstrap": "^4.5.2",
+    "cors": "^2.8.5",
     "eventemitter3": "^4.0.7",
     "node-fetch": "^2.6.1",
     "react": "^16.13.1",
@@ -62,7 +64,6 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
-    "socket.io": "2.4.1",
-    "socket.io-client": "^2.4.0"
+    "socket.io": "2.4.1"
   }
 }

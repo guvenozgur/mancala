@@ -10,18 +10,18 @@ export default class UIEmitter implements IUIEmitter{
     }
 
     @bind
-    createGameResponse(msg: any): void{
-        this.store.dispatch({type: `SET_PLAYER_ID`, data: msg});
+    loginSuccess(playerId: string): void {
+        this.store.dispatch({type: 'SET_PLAYER_ID', data: playerId});
     }
 
     @bind
-    moveResp(msg: any): void{
-        this.store.dispatch({type: `MOVE`, data: msg});
+    updateBoard(game: any): void {
+        this.store.dispatch({type: `UPDATE_BOARD`, data: game});
     }
 
     @bind
-    setTurn(msg: any): void {
-        this.store.dispatch({type: `SET_TURN`, data: msg});
+    waitingForParticipant(isWaiting: any): void {
+        this.store.dispatch({type: `WAITING_FOR_PARTICIPANT`, data: isWaiting});
     }
 
 }
